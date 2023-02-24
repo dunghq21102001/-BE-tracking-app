@@ -169,5 +169,9 @@ $api->version('v1', function ($api) {
             'as' => 'tracking.delete',
             'uses' => 'TrackingController@delete'
         ]);
+        $api->get('search', [
+            'as' => 'tracking.search',
+            'uses' => 'TrackingController@search'
+        ]);
     });
 });

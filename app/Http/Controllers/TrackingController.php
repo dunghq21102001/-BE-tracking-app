@@ -79,6 +79,17 @@ class TrackingController extends Controller
         }
     }
 
+    public function search(Request $request)
+    {
+        try {
+            $user = Auth::user();
+            return Tracking::where([['bol_id', 'like', '%' . $request->input('searchData') . '%'], ['user_id', $user->id]])->get();
+        } catch (\Exception $e) {
+            // throw new \Exception('tracking not found!');
+            return $e;
+        }
+    }
+
 
     private function validateData($request)
     {
