@@ -124,6 +124,25 @@ $api->version('v1', function ($api) {
         // ]);
     });
 
+    $api->group(['prefix' => '/request', 'namespace' => 'App\Http\Controllers',  'middleware' => ['auth']], function ($api) {
+        $api->get('/', [
+            'as' => 'request.view',
+            'uses' => 'RequestController@index'
+        ]);
+        $api->post('/', [
+            'as' => 'request.create',
+            'uses' => 'RequestController@create'
+        ]);
+        // $api->put('/{roleId:[0-9]+}', [
+        //     'as' => 'request.update',
+        //     'uses' => 'RequestController@update'
+        // ]);
+        $api->delete('/{requestId:[0-9]+}', [
+            'as' => 'request.delete',
+            'uses' => 'RequestController@delete'
+        ]);
+    });
+
     $api->group(['prefix' => '/receiver', 'namespace' => 'App\Http\Controllers',  'middleware' => ['auth']], function ($api) {
         $api->get('/', [
             'as' => 'receiver.view',
