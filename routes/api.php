@@ -95,14 +95,14 @@ $api->version('v1', function ($api) {
             'as' => 'service.create',
             'uses' => 'ServiceController@create'
         ]);
-        $api->put('/{roleId:[0-9]+}', [
+        $api->put('/{id:[0-9]+}', [
             'as' => 'service.update',
             'uses' => 'ServiceController@update'
         ]);
-        // $api->delete('/{roleId:[0-9]+}', [
-        //     'as' => 'service.delete',
-        //     'uses' => 'ServiceController@delete'
-        // ]);
+        $api->delete('/{id:[0-9]+}', [
+            'as' => 'service.delete',
+            'uses' => 'ServiceController@delete'
+        ]);
     });
 
     $api->group(['prefix' => '/guild', 'namespace' => 'App\Http\Controllers',  'middleware' => ['auth']], function ($api) {
@@ -114,14 +114,14 @@ $api->version('v1', function ($api) {
             'as' => 'guild.create',
             'uses' => 'GuildController@create'
         ]);
-        $api->put('/{roleId:[0-9]+}', [
+        $api->put('/{id:[0-9]+}', [
             'as' => 'guild.update',
             'uses' => 'GuildController@update'
         ]);
-        // $api->delete('/{roleId:[0-9]+}', [
-        //     'as' => 'guild.delete',
-        //     'uses' => 'GuildController@delete'
-        // ]);
+        $api->delete('/{id:[0-9]+}', [
+            'as' => 'guild.delete',
+            'uses' => 'GuildController@delete'
+        ]);
     });
 
     $api->group(['prefix' => '/request', 'namespace' => 'App\Http\Controllers',  'middleware' => ['auth']], function ($api) {
@@ -140,6 +140,33 @@ $api->version('v1', function ($api) {
         $api->delete('/{requestId:[0-9]+}', [
             'as' => 'request.delete',
             'uses' => 'RequestController@delete'
+        ]);
+    });
+
+    $api->group(['prefix' => '/language', 'namespace' => 'App\Http\Controllers',  'middleware' => ['auth']], function ($api) {
+        $api->get('/', [
+            'as' => 'language.view',
+            'uses' => 'LanguageController@index'
+        ]);
+        $api->get('/en', [
+            'as' => 'language.view',
+            'uses' => 'LanguageController@getEn'
+        ]);
+        $api->get('/vi', [
+            'as' => 'language.view',
+            'uses' => 'LanguageController@getVi'
+        ]);
+        $api->post('/', [
+            'as' => 'language.create',
+            'uses' => 'LanguageController@create'
+        ]);
+        $api->put('/{roleId:[0-9]+}', [
+            'as' => 'language.update',
+            'uses' => 'LanguageController@update'
+        ]);
+        $api->delete('/{requestId:[0-9]+}', [
+            'as' => 'language.delete',
+            'uses' => 'LanguageController@delete'
         ]);
     });
 
