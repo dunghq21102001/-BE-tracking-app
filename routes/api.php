@@ -16,6 +16,14 @@ $api->version('v1', function ($api) {
     $api->get('logout', [
         'uses' => 'App\Http\Controllers\UserController@logout'
     ]);
+
+    $api->get('en', [
+        'uses' => 'App\Http\Controllers\LanguageController@getEn'
+    ]);
+    $api->get('vi', [
+        'uses' => 'App\Http\Controllers\LanguageController@getVi'
+    ]);
+
     $api->group(['prefix' => '/user', 'namespace' => 'App\Http\Controllers',  'middleware' => ['auth']], function ($api) {
         
         $api->get('profile', [
@@ -147,14 +155,6 @@ $api->version('v1', function ($api) {
         $api->get('/', [
             'as' => 'language.view',
             'uses' => 'LanguageController@index'
-        ]);
-        $api->get('/en', [
-            'as' => 'language.view',
-            'uses' => 'LanguageController@getEn'
-        ]);
-        $api->get('/vi', [
-            'as' => 'language.view',
-            'uses' => 'LanguageController@getVi'
         ]);
         $api->post('/', [
             'as' => 'language.create',

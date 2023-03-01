@@ -19,6 +19,8 @@ class CreateTrackingsTable extends Migration
             $table->string('receiver_id');
             $table->string('bol_id');
             $table->string('note')->default('');
+            $table->string('status')->default('new');
+            $table->string('delivery_note')->default('none');
             $table->timestamps();
         });
     }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Receiver;
+use App\Models\Tracking;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -73,9 +74,12 @@ class ReceiverController extends Controller
     public function delete($id)
     {
         try {
+            if (Tracking::where('receiver_id', $id)->exists()) {
+                return response(['error' => 'Không thể xoá người dùng này vì đang sử dụng ở tracking']);
+            }
             $receiver = Receiver::findOrFail($id);
             $receiver->delete();
-            return response(['message' => 'Delete receiver successfully']);
+            return response(['message' => 'Xoá người nhận thành công']);
         } catch (\Exception $e) {
             throw new \Exception('receiver not found!');
         }

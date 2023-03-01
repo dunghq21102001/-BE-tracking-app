@@ -24,7 +24,6 @@ class CreateTableUsersTable extends Migration
             $table->string('city')->default('');
             $table->string('country')->default('');
             $table->string('address')->default('');
-            $table->string('roles')->default('');
             $table->text('api_token')->default('');
             $table->timestamps();
         });
