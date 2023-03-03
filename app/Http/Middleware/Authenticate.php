@@ -58,7 +58,7 @@ class Authenticate
         $route = $request->route();
         $per = Permission::where('name', data_get($route, '1.as'))->first();
         if (!$user->roles) throw new \Exception('You are not allowed');
-        if (!$per)  throw new \Exception('You are not allowed.');
+        if (!$per)  throw new \Exception('You are not allowed');
         foreach ($user->roles as $role) {
             $role->pivot->role_id;
             if (DB::table('role_permissions')
