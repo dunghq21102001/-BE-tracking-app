@@ -113,6 +113,34 @@ $api->version('v1', function ($api) {
         ]);
     });
 
+
+    $api->group(['prefix' => '/post', 'namespace' => 'App\Http\Controllers',  'middleware' => ['auth']], function ($api) {
+        $api->get('/', [
+            'as' => 'post.view',
+            'uses' => 'PostController@index'
+        ]);
+        $api->get('/{id:[0-9]+}', [
+            'as' => 'post.view',
+            'uses' => 'PostController@detail'
+        ]);
+        $api->get('/getTop', [
+            'as' => 'post.view',
+            'uses' => 'PostController@getTop5'
+        ]);
+        $api->post('/', [
+            'as' => 'post.create',
+            'uses' => 'PostController@create'
+        ]);
+        $api->put('/{id:[0-9]+}', [
+            'as' => 'post.update',
+            'uses' => 'PostController@update'
+        ]);
+        $api->delete('/{id:[0-9]+}', [
+            'as' => 'post.delete',
+            'uses' => 'PostController@delete'
+        ]);
+    });
+
     $api->group(['prefix' => '/guild', 'namespace' => 'App\Http\Controllers',  'middleware' => ['auth']], function ($api) {
         $api->get('/', [
             'as' => 'guild.view',

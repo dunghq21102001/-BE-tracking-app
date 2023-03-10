@@ -71,4 +71,8 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     {
         return $this->hasMany(Tracking::class);
     }
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
 }

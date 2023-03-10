@@ -18,5 +18,9 @@ return [
             'driver' => 'eloquent',
             'model' => \App\Models\User::class
         ]
+    ],
+    
+    'aliases' => [
+        'App' => Illuminate\Support\Facades\App::class
     ]
 ];

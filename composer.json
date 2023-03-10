@@ -1,7 +1,11 @@
 {
     "name": "laravel/lumen",
     "description": "The Laravel Lumen Framework.",
-    "keywords": ["framework", "laravel", "lumen"],
+    "keywords": [
+        "framework",
+        "laravel",
+        "lumen"
+    ],
     "license": "MIT",
     "type": "project",
     "require": {
@@ -10,6 +14,7 @@
         "flipbox/lumen-generator": "^9.1",
         "fruitcake/laravel-cors": "^3.0",
         "laravel/lumen-framework": "^8.3.1",
+        "league/flysystem": "1.1",
         "tymon/jwt-auth": "^1.0"
     },
     "require-dev": {
@@ -22,7 +27,10 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        }
+        },
+        "files": [
+            "app/helpers.php"
+        ]
     },
     "autoload-dev": {
         "classmap": [
