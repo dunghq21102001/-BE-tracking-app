@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Image;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -10,44 +11,52 @@ class PostController extends Controller
 {
     public function index()
     {
-        return Post::with('user')->paginate(20);
+        return Post::with(['user', 'images'])->paginate(20);
         // latest()->take(5)->get();
     }
 
     public function getTop5()
     {
-        return Post::with('user')->latest()->take(5)->get();
+        return Post::with(['user', 'images'])->latest()->take(5)->get();
     }
 
     public function detail($id)
     {
-        return Post::with('user')->findOrFail($id);
+        return Post::with(['user', 'images'])->findOrFail($id);
     }
 
     public function create(Request $request)
     {
-        // return $request;
         $data = $this->validateData($request);
         $user = Auth::user();
+        $files = $request->file('files');
         try {
-            if ($request->hasFile('file')) {
+            if ($request->hasFile('files')) {
 
-                $data->file->store('posts', 'public');
-
-                Post::create([
+                $post = Post::create([
                     'title' => $data->title,
                     'description' => $data->description,
                     'content' => $data->content,
                     'summary' => $data->summary,
-                    'file_path' => $request->file->hashName(),
                     'user_id' => $user->id
                 ]);
+                $i = 0;
+                foreach ($files as $file) {
+                    $i++;
+                    $file_path = $post->id . $i . time() . '.' . $file->getClientOriginalExtension();
+                    $file->move('images/', $file_path);
+                    Image::create([
+                        'file_path' => $file_path,
+                        'post_id' => $post->id
+                    ]);
+                }
+
                 return response([
                     'message' => 'Create post successfully'
                 ]);
             }
             return response([
-                'message' => 'Create post fail'
+                'message' => 'Create post fail, Please try again!'
             ]);
         } catch (\Exception $e) {
             return $e;
@@ -102,11 +111,11 @@ class PostController extends Controller
         $this->validate(
             $request,
             [
-                'title' => 'required|max:255',
+                'title' => 'max:255',
                 'description' => 'max:255',
                 'content' => 'max:2000',
                 'summary' => 'max:255',
-                'image' => 'mimes:png,jpg,bmp,jpeg'
+                // 'files' => 'mimes:png,jpg,bmp,jpeg'
             ],
             [
                 // 'last_name.required' => 'You need to input name',
