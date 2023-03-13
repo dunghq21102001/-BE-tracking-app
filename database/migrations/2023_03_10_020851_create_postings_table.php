@@ -19,7 +19,6 @@ class CreatePostingsTable extends Migration
             $table->string('description')->default('');
             $table->string('content', 2000)->default('');
             $table->string('summary')->default('');
-            $table->string('file_path')->default('');
             $table->bigInteger('count')->default(0);
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')
